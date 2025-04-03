@@ -1,6 +1,6 @@
 # Welcome to the UTHP test suite
 
-The UTHP team put together a set of pytests to test the Yocto build of the UTHP (Ultimate TrucK Hacking Platform) image. The tests are located in the `uthp-tests` directory, and are run on the target device after the image has been flashed to the eMMC (embedded MultiMediaCard).
+The UTHP team put together a set of pytests to test the Yocto build of the UTHP (Ultimate Truck Hacking Platform) image. The tests are located in the `uthp-tests` directory, and are run on the target device after the image has been flashed to the eMMC (embedded MultiMediaCard).
 
 ## Prerequisites
 
@@ -82,6 +82,9 @@ or if make is not installed on your system, you can simply run:
 ```bash
 pytest ./remote/remote-testing.py
 ```
+
+> Note: To perform remote tests, you will need to clone the TruckDevil repo: `git clone https://github.com/Spenc3rB/TruckDevil` inside the uthp-tests directory.
+
 And after we have achieved success, we can submit the image as production-ready:
 
 1. Save the test results:
