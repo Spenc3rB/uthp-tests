@@ -64,7 +64,7 @@ def main():
     sys.stderr = StreamToLogger(logger, logging.ERROR)
 
     try:
-        print("\nRunning tests...\n")
+        print("\nRunning remote tests...\n")
         result = subprocess.run(["pytest", "./remote"], capture_output=True, text=True)
         # print the result of the test
         print(result.stderr)
