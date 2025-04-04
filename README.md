@@ -140,3 +140,10 @@ or if running remote tests:
 ```bash
 make reset-remote
 ```
+
+# Updates to the UTHP can also be performed by running the following command:
+
+```bash
+python3 UpdateTHP.py
+```
+> Note: This will update the UTHP to the latest version of the UTHP software. The UTHP will reboot after the update is complete.
