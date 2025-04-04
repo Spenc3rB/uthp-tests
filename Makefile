@@ -10,6 +10,13 @@ plc-test: create-log-dir
 	@script -q -c "bash -c './plc-testing && pytest ./plc/'" $(LOG_FILE)-plc-results.txt
 
 remote-test: create-log-dir
+	@if ! ip link show vcan0 > /dev/null 2>&1; then \
+		sudo modprobe vcan; \
+		sudo ip link add dev vcan0 type vcan; \
+		sudo ip link set up vcan0; \
+	else \
+		echo "vcan0 is already available"; \
+	fi
 	python3 ./remote/remote-testing.py
 
 reset:

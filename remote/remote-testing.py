@@ -56,7 +56,6 @@ def main():
         os.environ["SERIAL_PORT"] = input("Enter the serial port for USB connection: ").strip()
         os.environ["TRUCKDEVIL_PORT"] = input("Enter the serial port for TruckDevil: ").strip()
         os.environ["GRIMMJ1708_PORT"] = input("Enter the serial port for Grimm's J1708 tool: ").strip()
-    print("\nEnvironment variables cleaned up.")
 
     # initialize logging
     logger = init_logging()

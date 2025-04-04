@@ -74,6 +74,10 @@ make plc-test
 ```
 and the remote tests:
 
+> Note: For these tests you will need to clone the following:
+> 1. https://github.com/Spenc3rB/TruckDevil
+> 2. https://github.com/mguentner/cannelloni --> this will need to be built onto the laptop conducting the remote testing
+
 ```bash
 make remote-test
 ```
@@ -84,6 +88,20 @@ pytest ./remote/remote-testing.py
 ```
 
 > Note: To perform remote tests, you will need to clone the TruckDevil repo: `git clone https://github.com/Spenc3rB/TruckDevil` inside the uthp-tests directory.
+> Side note: j1708 encoding is tested by looking at the encoding (which is encoded as a j1708 message) and then sending a message serially to the UTHP. The actual software could not be tested:
+```bash
+  File "/usr/local/lib/python3.12/dist-packages/j1708-1.0-py3.12.egg/j1708/pid_types.py", line 278, in <module>
+  File "/usr/lib/python3.12/enum.py", line 595, in __new__
+    enum_class = super().__new__(metacls, cls, bases, classdict, **kwds)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/enum.py", line 271, in __set_name__
+    enum_member = enum_class._new_member_(enum_class, *args)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/dist-packages/j1708-1.0-py3.12.egg/j1708/pid_types.py", line 67, in __new__
+  File "/usr/lib/python3.12/enum.py", line 1145, in __new__
+    raise TypeError("%r has no members defined" % cls)
+TypeError: <flag 'BrakeSystemAirPressureLowWarningSwitchStatus'> has no members defined
+```
 
 And after we have achieved success, we can submit the image as production-ready:
 
