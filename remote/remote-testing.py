@@ -4,6 +4,7 @@ import subprocess
 import logging
 import sys
 from datetime import datetime
+from dotenv import load_dotenv
 
 class StreamToLogger:
     def __init__(self, logger, level):
@@ -49,14 +50,14 @@ def cleanup_env():
 
 def main():
     """Run the SSH test script with environment variables set."""
-    os.environ["SSH_HOST"] = input("Enter remote host IP: ").strip()
-    os.environ["SSH_USER"] = input("Enter SSH username: ").strip()
+    os.environ["SSH_HOST"] = "192.168.7.2"
+    os.environ["SSH_USER"] = "uthp"
     os.environ["SSH_PASS"] = input("Enter SSH password: ").strip()
     if input("Are you connected over USB? (y/n): ").strip().lower() == 'y':
-        os.environ["SERIAL_PORT"] = input("Enter the serial port for USB connection: ").strip()
-        os.environ["TRUCKDEVIL_PORT"] = input("Enter the serial port for TruckDevil: ").strip()
-        os.environ["GRIMMJ1708_PORT"] = input("Enter the serial port for Grimm's J1708 tool: ").strip()
-
+        load_dotenv()
+        os.environ["SERIAL_PORT"] = os.getenv("SERIAL_PORT")
+        os.environ["TRUCKDEVIL_PORT"] = os.getenv("TRUCKDEVIL_PORT")
+        os.environ["GRIMMJ1708_PORT"] = os.getenv("GRIMMJ1708_PORT")
     # initialize logging
     logger = init_logging()
     sys.stdout = StreamToLogger(logger, logging.INFO)

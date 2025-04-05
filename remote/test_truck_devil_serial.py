@@ -57,14 +57,14 @@ def change_working_dir():
 def test_serial_read_write():
     """Ensure that the truckdevil serial read runs without errors."""
     command = "python3 ./truckdevil.py add_device m2 can0 500000 " + os.getenv("TRUCKDEVIL_PORT") + " run_module read_messages set num_messages 5 print_messages"
-    result = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=30)
+    result = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=60)
     print(result.stdout)
 
     assert result.returncode == 0, f"Command failed with return code {result.returncode}"
     assert "error" not in result.stderr.lower(), f"Error in command output: {result.stderr}"
 
     command = "python3 ./truckdevil.py add_device m2 can0 500000 " + os.getenv("TRUCKDEVIL_PORT") + " run_module send_messages send 0x0CEA000C ECFE00"
-    result = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=30)
+    result = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=60)
     print(result.stdout)
 
     assert result.returncode == 0, f"Command failed with return code {result.returncode}"

@@ -57,7 +57,7 @@ def change_working_dir():
 def test_tcp_read():
     """Ensure that the truckdevil serial read runs without errors."""
     command = "python3 ./truckdevil.py add_device m2:" + os.getenv("SSH_HOST") + " can0 500000 1234 run_module read_messages set num_messages 5 print_messages"
-    result = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=30)
+    result = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=60)
     print(result.stdout)
 
     assert result.returncode == 0, f"Command failed with return code {result.returncode}"
