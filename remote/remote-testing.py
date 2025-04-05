@@ -55,9 +55,10 @@ def main():
     os.environ["SSH_PASS"] = input("Enter SSH password: ").strip()
     if input("Are you connected over USB? (y/n): ").strip().lower() == 'y':
         load_dotenv()
-        os.environ["SERIAL_PORT"] = os.getenv("SERIAL_PORT")
-        os.environ["TRUCKDEVIL_PORT"] = os.getenv("TRUCKDEVIL_PORT")
-        os.environ["GRIMMJ1708_PORT"] = os.getenv("GRIMMJ1708_PORT")
+        os.environ["SERIAL_PORT"] = os.getenv("SERIAL_PORT", "/dev/ttyACM0")
+        os.environ["TRUCKDEVIL_PORT"] = os.getenv("TRUCKDEVIL_PORT", "/dev/ttyACM1")
+        os.environ["GRIMMJ1708_PORT"] = os.getenv("GRIMMJ1708_PORT", "/dev/ttyACM2")
+
     # initialize logging
     logger = init_logging()
     sys.stdout = StreamToLogger(logger, logging.INFO)
