@@ -1,2 +1,2 @@
-client_file_paths: "updates/BB-UTHP-GPIO.dts"
-uthp_file_paths: "/boot/dts/uthp/BB-UTHP-GPIO.dts"
+client_file_paths: "updates/BB-UTHP-GPIO.dts,updates/data/CSS-Electronics-SAE-J1939-DEMO.dbc"
+uthp_file_paths: "/boot/dts/uthp/BB-UTHP-GPIO.dts,/home/uthp/uthp-tests/core/data/"
