@@ -12,7 +12,7 @@ def test_service():
     """Ensure that the plc4trucksduck service is running."""
     command = "systemctl is-active --quiet plc4trucksduck"
     result = subprocess.run(command, shell=True)
-    assert result.returncode == 0, "plc4trucksduck service is not running. Please run `make test` in the root directory."
+    assert result.returncode == 0, "plc4trucksduck service is not running."
 
 def test_installation():
     """Ensure the hv_networks package is installed."""

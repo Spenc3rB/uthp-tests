@@ -1,2 +1,4 @@
-client_file_paths: "updates/BB-UTHP-GPIO.dts,updates/data/CSS-Electronics-SAE-J1939-DEMO.dbc"
-uthp_file_paths: "/boot/dts/uthp/BB-UTHP-GPIO.dts,/home/uthp/uthp-tests/core/data/"
+# each csv must be in order from left to right to match the file_paths and permissions
+client_file_paths: "updates/BB-UTHP-GPIO.dts,updates/CSS-Electronics-SAE-J1939-DEMO.dbc,updates/Makefile,updates/test_rtc.py"
+uthp_file_paths: "/boot/dts/uthp/BB-UTHP-GPIO.dts,/home/uthp/uthp-tests/core/data/CSS-Electronics-SAE-J1939-DEMO.dbc,/home/uthp/uthp-tests/Makefile,/home/uthp/uthp-tests/core/test_rtc.py"
+uthp_file_permissions: "644,744,644,644"
