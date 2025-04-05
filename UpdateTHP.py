@@ -10,8 +10,8 @@ update_overlays = input("Do you want to update overlays? (yes/no): ").strip().lo
 with open('./updates/updates.yaml', 'r') as yaml_file:
     config = yaml.safe_load(yaml_file)
 
-local_dts_paths = config['client_file_paths'].split(',').strip()
-remote_dts_paths = config['uthp_file_paths'].split(',').strip()
+local_dts_paths = config['client_file_paths'].split(',')
+remote_dts_paths = config['uthp_file_paths'].split(',')
 
 ssh = paramiko.SSHClient()
 ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
@@ -19,12 +19,11 @@ ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 try:
     print("Connecting to remote host...")
     ssh.connect(hostname, port=port, username=username, password=password)
-
-    with SCPClient(ssh.get_transport()) as scp:
-        print("Uploading patched .dts file...")
-        scp.put(local_dts_path, "/home/uthp/")
     
     for local_dts_path, remote_dts_path in zip(local_dts_paths, remote_dts_paths):
+        with SCPClient(ssh.get_transport()) as scp:
+            print("Uploading patched files...")
+            scp.put(local_dts_path, "/home/uthp/")
         print(f"Moving {local_dts_path} to {remote_dts_path}...")
         ssh.exec_command("echo {} | sudo -S mv /home/uthp/{} {}".format(password, local_dts_path.split('/')[-1], remote_dts_path))
         ssh.exec_command("echo {} | sudo -S chmod 644 {}".format(password, remote_dts_path))
