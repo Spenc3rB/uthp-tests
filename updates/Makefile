@@ -32,6 +32,11 @@ reset:
 	sudo rm -f /var/log/j17084truckduck-errors.log; \
 	sudo rm -f /var/log/j17084truckduck.log; \
 	if ls /opt/uthp/programs/cmap/*.log 1> /dev/null 2>&1; then sudo rm /opt/uthp/programs/cmap/*.log; fi;
+	sudo systemctl stop j17084truckduck
+	sudo systemctl stop plc4trucksduck
+	sudo systemctl stop truckdevil-tcp
+	sudo systemctl stop truckdevil-serial
+
 
 reset-remote:
 	@echo "Running reset-remote on host: $(HOST)"; \
@@ -42,10 +47,6 @@ reset-remote:
 production-ready: reset
 	rm -rf /home/uthp/*
 	passwd --expire uthp
-	sudo systemctl stop j17084truckduck
-	sudo systemctl stop plc4trucksduck
-	sudo systemctl stop truckdevil-tcp
-	sudo systemctl stop truckdevil-serial
 
 create-log-dir:
 	mkdir -p $(LOG_DIR)

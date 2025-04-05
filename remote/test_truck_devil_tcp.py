@@ -4,12 +4,7 @@ import sys
 import subprocess
 import paramiko
 import pathlib
-
-# send a serial command to verify init
-# "#0500000can0"
-
-# recv serial command to verify recv
-# should be in the form: "$0cea000b03ecfe00*"
+import time
 
 def cleanup():
     ssh_host = os.getenv("SSH_HOST")
@@ -28,7 +23,7 @@ def cleanup():
 
     ssh.close()
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="module", autouse=True)
 def setup():
     """Initialize the test environment."""
     ssh_host = os.getenv("SSH_HOST")
@@ -47,7 +42,7 @@ def setup():
 
     ssh.close()
     
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="module", autouse=True)
 def change_working_dir():
     """Change the working directory and update sys.path for imports."""
     truckdevil_path = pathlib.Path(__file__).parent / ".." /"TruckDevil" / "truckdevil"
@@ -56,14 +51,17 @@ def change_working_dir():
 
 def test_tcp_read():
     """Ensure that the truckdevil serial read runs without errors."""
-    command = "python3 ./truckdevil.py add_device m2:" + os.getenv("SSH_HOST") + " can0 500000 1234 run_module read_messages set num_messages 5 print_messages"
-    result = subprocess.run(command, shell=True, capture_output=True, text=True, timeout=60)
-    print(result.stdout)
+    ssh_host = os.getenv("SSH_HOST")
+    time.sleep(10)  # wait for the service to start
 
+    # read messages only because we would have to spin another port up
+    command = f"python3 ./truckdevil.py add_device m2:{ssh_host} can0 500000 1234 run_module read_messages set num_messages 5 print_messages"
+    result = subprocess.run(command, shell=True, capture_output=True, text=True)
+    print("Command output:\n", result.stdout)
     assert result.returncode == 0, f"Command failed with return code {result.returncode}"
     assert "error" not in result.stderr.lower(), f"Error in command output: {result.stderr}"
 
-     # we only test read because the connection gets refused with the same port, and we'd need to spin up another port
-    # however, send is validated through serial, and has been proven to work
-
     cleanup()
+
+if __name__ == "__main__":
+    pytest.main(["-v", "-s", __file__])
