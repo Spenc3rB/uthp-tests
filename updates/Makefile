@@ -47,6 +47,11 @@ reset-remote:
 production-ready: reset
 	rm -rf /home/uthp/*
 	passwd --expire uthp
+	@echo "Ensuring all services are disabled"; \
+	sudo systemctl disable plc4trucksduck
+	sudo systemctl disable j17084truckduck
+	sudo systemctl disable truckdevil-tcp
+	sudo systemctl disable truckdevil-serial
 
 create-log-dir:
 	mkdir -p $(LOG_DIR)

@@ -4,6 +4,8 @@ The UTHP team put together a set of pytests to test the Yocto build of the UTHP 
 
 ## Prerequisites
 
+Before you use this repository, you must have a basic understanding of Linux commands.
+
 ### 1. Connect the UTHP to the network and power it on with the SD card inserted. 
 
 >You may need to hold down the s2 button if another image is already flashed to the eMMC.
@@ -51,7 +53,15 @@ CHANGED IMMEDIATELY AFTER RUNNING `make production-ready`.*
 
 ### 3. Run the tests
 
-> Core and PLC tests are built into the UTHP image, so you can run them from the UTHP itself. The remote tests are run from another local machine connected via USB-OTG Ethernet (192.168.7.2).
+#### 3.1 Updates to the UTHP can be performed by running the following command:
+
+Please run this to ensure the UTHP is up to date with the latest software before performing the tests:
+
+```bash
+python3 UpdateTHP.py
+```
+
+Core and PLC tests are built into the UTHP image, so you can run them from the UTHP itself. The remote tests are run from another local machine connected via USB-OTG Ethernet (192.168.7.2).
 
 ```bash
 cd uthp-tests
@@ -72,11 +82,14 @@ and the PLC tests:
 ```bash
 make plc-test
 ```
+and then CAN 0-2 specific tests:
+```
+make can0-2-test
+```
 and the remote tests:
 
 > Note: For these tests you will need to clone the following:
 > 1. https://github.com/Spenc3rB/TruckDevil
-> 2. https://github.com/mguentner/cannelloni --> this will need to be built onto the laptop conducting the remote testing
 
 ```bash
 make remote-test
@@ -113,22 +126,28 @@ And after we have achieved success, we can submit the image as production-ready:
 scp -r uthp@192.168.7.2:/home/uthp/uthp-tests/logs <destination>
 ```
 
-and then copy the remote test results from your local machine as well.
+and then copy the remote test results from your local machine as well:
+
+```bash
+git clone https://github.com/SystemsCyber/UTHP
+```
+```bash
+cd UTHP/Testing/Software/assets/logs
+```
+```bash
+cp <source-log-files> .
+```
+
+Then open up a text editor and edit the `README.md` file to include the test results, along with your initials. You can continue to update this later if needed.
 
 > WARNING: The following command will delete the uthp-tests dir and set the password to expire for the uthp user:
 ```bash
 make production-ready
 ```
 
-## Troubleshooting
-
-If you encounter any issues, send the logs to the UTHP layer maintainer:
-
-```bash
-beersc@colostate.edu
-```
-
 ## Reset the UTHP tests
+
+> This stops systemd services that take up the CPU and memory, and resets the UTHP to a clean state. If performed remotely it will clean the cache.
 
 If you need to reset the UTHP tests, you can do so by running the following command:
 
@@ -140,10 +159,3 @@ or if running remote tests:
 ```bash
 make reset-remote
 ```
-
-# Updates to the UTHP can also be performed by running the following command:
-
-```bash
-python3 UpdateTHP.py
-```
-> Note: This will update the UTHP to the latest version of the UTHP software. The UTHP will reboot after the update is complete.
