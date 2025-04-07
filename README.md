@@ -145,6 +145,71 @@ Then open up a text editor and edit the `README.md` file to include the test res
 make production-ready
 ```
 
+After running the tests, ensure nothing is left in the uthp user's home directory, the output of `systemctl status` looks something similar to this clean report:
+
+```bash
+● UTHP-R1-0032
+    State: running
+    Units: 231 loaded (incl. loaded aliases)
+     Jobs: 0 queued
+   Failed: 0 units
+    Since: Wed 1969-12-31 19:00:03 EST; 55 years 3 months ago
+  systemd: 255.17^
+   CGroup: /
+           ├─init.scope
+           │ └─1 /sbin/init
+           └─system.slice
+             ├─busybox-klogd.service
+             │ └─193 /usr/sbin/klogd -n
+             ├─busybox-syslog.service
+             │ └─194 /usr/sbin/syslogd -n
+             ├─dbus.service
+             │ └─195 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopid>
+             ├─safe-shutdown.service
+             │ ├─ 198 /bin/bash -e /opt/uthp/scripts/safe-shutdown.sh
+             │ └─5193 sleep 2
+             ├─system-getty.slice
+             │ └─getty@tty1.service
+             │   └─196 /sbin/agetty -o "-p -- \\u" --noclear - linux
+             ├─system-serial\x2dgetty.slice
+             │ ├─serial-getty@ttyGS0.service
+             │ │ └─278 /sbin/agetty -8 -L ttyGS0 115200 linux
+             │ └─serial-getty@ttyS0.service
+             │   └─199 /sbin/agetty -8 -L ttyS0 115200 linux
+             ├─system-sshd.slice
+             │ └─sshd@13-192.168.7.2:22-192.168.7.1:6349.service
+             │   ├─4553 "sshd: uthp [priv]"
+             │   ├─4561 "sshd: uthp@pts/0"
+             │   ├─4562 -bash
+             │   ├─5194 systemctl status
+             │   └─5195 less
+             ├─systemd-journald.service
+             │ └─105 /usr/lib/systemd/systemd-journald
+             ├─systemd-logind.service
+             │ └─206 /usr/lib/systemd/systemd-logind
+             ├─systemd-networkd.service
+             │ └─140 /usr/lib/systemd/systemd-networkd
+             ├─systemd-resolved.service
+             │ └─172 /usr/lib/systemd/systemd-resolved
+             ├─systemd-timesyncd.service
+             │ └─173 /usr/lib/systemd/systemd-timesyncd
+             ├─systemd-udevd.service
+             │ └─udev
+             │   └─138 /usr/lib/systemd/systemd-udevd
+             └─systemd-userdbd.service
+               ├─ 141 /usr/lib/systemd/systemd-userdbd
+```
+
+...and pop open another terminal and ensure the passwd is expired for the uthp user. DO NOT SET A NEW PASSWORD. For example:
+
+```bash
+ssh uthp@192.168.7.2
+uthp@192.168.7.2's password:
+Last login: Sat Apr  5 03:28:57 2025 from 192.168.7.1
+WARNING: Your password has expired.
+You must change your password now and login again!
+```
+
 ## Reset the UTHP tests
 
 > This stops systemd services that take up the CPU and memory, and resets the UTHP to a clean state. If performed remotely it will clean the cache.

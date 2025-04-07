@@ -11,14 +11,10 @@ plc-test: create-log-dir
 	sudo systemctl stop plc4trucksduck
 
 remote-test: create-log-dir
-	@if ! ip link show vcan0 > /dev/null 2>&1; then \
-		sudo modprobe vcan; \
-		sudo ip link add dev vcan0 type vcan; \
-		sudo ip link set up vcan0; \
-	else \
-		echo "vcan0 is already available"; \
-	fi
 	python3 ./remote/remote-testing.py
+
+can0-2-test: create-log-dir
+	@script -q -c "bash -c './can0-2-testing && pytest ./can0-2/'" $(LOG_FILE)-can0-2-results.txt
 
 reset:
 	@echo "Running reset on host: $(HOST)"; \
@@ -27,6 +23,10 @@ reset:
 	rm -rf core/.pytest_cache; \
 	rm -rf plc/__pycache__; \
 	rm -rf plc/.pytest_cache; \
+	rm -rf remote/__pycache__; \
+	rm -rf remote/.pytest_cache; \
+	rm -rf can0-2/__pycache__; \
+	rm -rf can0-2/.pytest_cache; \
 	sudo rm -f /var/log/plc4trucksduck-errors.log; \
 	sudo rm -f /var/log/plc4trucksduck.log; \
 	sudo rm -f /var/log/j17084truckduck-errors.log; \
@@ -46,7 +46,7 @@ reset-remote:
 
 production-ready: reset
 	rm -rf /home/uthp/*
-	passwd --expire uthp
+	sudo passwd --expire uthp
 	@echo "Ensuring all services are disabled"; \
 	sudo systemctl disable plc4trucksduck
 	sudo systemctl disable j17084truckduck
