@@ -11,14 +11,10 @@ plc-test: create-log-dir
 	sudo systemctl stop plc4trucksduck
 
 remote-test: create-log-dir
-	@if ! ip link show vcan0 > /dev/null 2>&1; then \
-		sudo modprobe vcan; \
-		sudo ip link add dev vcan0 type vcan; \
-		sudo ip link set up vcan0; \
-	else \
-		echo "vcan0 is already available"; \
-	fi
 	python3 ./remote/remote-testing.py
+
+can0-2-test: create-log-dir
+	@script -q -c "bash -c './can0-2-testing && pytest ./can0-2/'" $(LOG_FILE)-can0-2-results.txt
 
 reset:
 	@echo "Running reset on host: $(HOST)"; \
@@ -47,6 +43,10 @@ reset-remote:
 production-ready: reset
 	rm -rf /home/uthp/*
 	passwd --expire uthp
+	sudo systemctl disable j17084truckduck
+	sudo systemctl disable plc4trucksduck
+	sudo systemctl disable truckdevil-tcp
+	sudo systemctl disable truckdevil-serial
 
 create-log-dir:
 	mkdir -p $(LOG_DIR)
