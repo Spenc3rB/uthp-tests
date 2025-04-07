@@ -4,7 +4,7 @@ The UTHP team put together a set of pytests to test the Yocto build of the UTHP 
 
 ## Prerequisites
 
-Before you use this repository, you must have a basic understanding of Linux commands.
+Before you use this repository, you must have a basic understanding of Linux commands, and GitHub. Resource on how to use the Linux command line GitHub can be found [here](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) and [here](https://docs.github.com/en/get-started/quickstart).
 
 ### 1. Connect the UTHP to the network and power it on with the SD card inserted. 
 
@@ -32,16 +32,9 @@ Now you are ready to take the tests for a spin! Remove the SD card from the UTHP
 
 ### 1. Set up the physcial testing space
 
-1. Start by plugging in the two battery chargers. Turn on both red safety switches on both the Cascadia and the Brake Board. 
-2. After turning on the Cascadia switch on the back side, key on. The brake board serves a J1708 network, and the Cascadia provides J1939. 
-3. Plug in the blue DSUB-15 from the brake board to the UTHP. 
-4. Plug in the green Deutsch 9-pin connector to the black Deutsch-9 pin conector on the UTHP. 
-5. Now the testbench is ready to go! You should have 3 UTHPs connected:
-    - UTHP 1 (Cascadia)
-    - UTHP 2 (Brake Board)
-    - UTHP 3 (Laptop)
+Start by turning on the two battery chargers, then turn on both red safety switches on both the Cascadia and the Brake Board. 
 
-### 2. To SSH into the pre-production UTHPs
+### 2. SSH into the "pre-production" UTHPs
 
 ```bash
 ssh uthp@192.168.7.2
@@ -51,17 +44,21 @@ ssh uthp@192.168.7.2
 *THIS PASSWORD IS TEMPORARY AND WILL BE
 CHANGED IMMEDIATELY AFTER RUNNING `make production-ready`.*
 
-### 3. Run the tests
+### 3. Update the UTHP
 
-#### 3.1 Updates to the UTHP can be performed by running the following command:
-
-Please run this to ensure the UTHP is up to date with the latest software before performing the tests:
-
-```bash
+```
 python3 UpdateTHP.py
 ```
 
-Core and PLC tests are built into the UTHP image, so you can run them from the UTHP itself. The remote tests are run from another local machine connected via USB-OTG Ethernet (192.168.7.2).
+After this has run, please power cycle the UTHP (ensure the blue LED is completely off before powering it back on).
+
+### 4. Run the tests
+
+ssh back into the UTHP. You should see the coresponding version number (see [./updates/updates.yaml](./updates/updates.yaml)) after you log in.
+
+Core, PLC, and CAN0-2 tests are run from the UTHP image, so you can run them from the UTHP itself. The remote tests are run from another local machine connected via USB-OTG Ethernet (192.168.7.2).
+
+#### 4.1 Understanding the test structure
 
 ```bash
 cd uthp-tests
@@ -72,27 +69,102 @@ Take a look at the Makefile to see the available targets:
 ```bash
 cat Makefile
 ```
-Let's run the core tests:
+
+You should have the following targets:
+- `core-test`: Runs the core tests
+- `plc-test`: Runs the PLC tests
+- `can0-2-test`: Runs the CAN 0-2 tests
+- `remote-test`: Runs the remote tests
+- `reset`: Resets the UTHP tests *!!!This will wipe the logs dir!!!*
+- `reset-remote`: Resets the remote tests *!!!This will wipe the logs dir!!!*
+- `production-ready`: Cleans up the UTHP tests, ensures all services are disabled, and sets the password to expire for the uthp user
+- `create-log-dir`: Creates a log directory for the test results (this is done automatically when you run the tests)
+
+#### 4.1 Core tests:
+
+> Note: The core tests have been verified on the Cascadia, but should be able to run on any network with CAN, and J1708.
+
+This tests the following:
+
+Software:
+- can-utils
+- cancat
+- canmatrix
+- cannelloni
+- cmap
+- ipython3
+- j1939 kernel module
+- jupyter lab
+- pretty-j1939
+- py-hv-networks
+- python3-can
+- python2.7
+- real time clock
+- rtl-sdr
+- safe-shutdown
+- scapy
+- sigrok-cli
+- tmux
+- truckdevil
+
+Hardware:
+- Deutch-9 Pin can0 send and receive
+- DSUB-15 J1708 send and receive
+
+Let's run the core tests from *within* the UTHP:
 
 ```bash
-make core-test
+sudo make core-test
 ```
-and the PLC tests:
+
+#### 4.2 PLC tests:
+
+> Note: The PLC tests have been verified on the Brake Board, but should be able to run on any network with PLC.
+
+This tests the following:
+
+Software:
+- plc4trucksduck
+- pretty-j1587
+
+Hardware:
+- DSUB-15 PLC send and receive (VBatt+12v and GND)
+
+Let's run the PLC tests from *within* the UTHP:
+
+> Note: The PLC tests require the Brake Board to be power cycled. First run:
 
 ```bash
-make plc-test
+sudo make plc-test
 ```
-and then CAN 0-2 specific tests:
+> wait for `Environment setup should be complete... waiting for user to confirm hardware is ready.` and then power cycle the Brake Board. After that, you can hit any key to continue the tests.
+#### 4.3 CAN0-2 tests:
+
+> Note: The CAN0-2 tests have been verified on the Truck-In-A-Box, but should be able to run on any network with 12V CAN on the Deutch-9 Pin.
+
+This tests the following:
+Software:
+- python3-can
+
+Hardware:
+- Deutch-9 Pin can0 send and receive
+- Deutch-9 Pin can1 send and receive
+- Deutch-9 Pin can2 send and receive
+
+> Note: CAN4 is verified manually, by inspecting the bitmagic.
+
+Let's run the CAN0-2 tests from *within* the UTHP:
 ```
 make can0-2-test
 ```
-and the remote tests:
 
-> Note: For these tests you will need to clone the following:
+#### 4.4 Remote tests:
+
+> Note: For these tests you will need to clone the following from within the uthp-tests directory:
 > 1. https://github.com/Spenc3rB/TruckDevil
 
 ```bash
-make remote-test
+sudo make remote-test
 ```
 or if make is not installed on your system, you can simply run:
 
@@ -116,29 +188,54 @@ pytest ./remote/remote-testing.py
 TypeError: <flag 'BrakeSystemAirPressureLowWarningSwitchStatus'> has no members defined
 ```
 
-And after we have achieved success, we can submit the image as production-ready:
+And after we have achieved success, we can submit the image as production-ready, but first...
 
-1. Save the test results:
+### 5. Save the test results
 
 > Note: Test results should be saved to the UTHP github repo: https://github.com/SystemsCyber/UTHP/tree/main/Testing/Software/assets/logs. The logs should be saved under a directory with the serial number of the UTHP. An example of the directory structure is shown in the [logs](https://github.com/SystemsCyber/UTHP/tree/main/Testing/Software/assets/logs) directory of the UTHP github repo.
 
-```bash
-scp -r uthp@192.168.7.2:/home/uthp/uthp-tests/logs <destination>
-```
+Each test result should be named respectively. Make sure to include all 4 test results (core, PLC, CAN0-2, and remote) in the same directory. The following walks you through the process:
 
-and then copy the remote test results from your local machine as well:
+#### 5.1 Clone the UTHP repo
 
 ```bash
 git clone https://github.com/SystemsCyber/UTHP
 ```
+#### 5.2 Copy the test results
+
+> Make sure these are the most recent (all passing) test results.
+
 ```bash
-cd UTHP/Testing/Software/assets/logs
+cd UTHP/Testing/Software/assets/logs 
 ```
+Make a new directory with the UTHP serial number:
+> Note: you will need to change XXXX
+
 ```bash
-cp <source-log-files> .
+mkdir UTHP-R1-XXXX
+```
+Then copy the `core`, `plc`, and `can0-2` test results:
+
+```bash
+scp -r uthp@192.168.7.2:/home/uthp/uthp-tests/logs ./UTHP-R1-XXXX
+```
+
+Finally copy the remote test results from your local machine to the UTHP repo:
+```bash
+ cp ../../../../../logs/*-remote-results.txt ./UTHP-R1-XXXX
 ```
 
 Then open up a text editor and edit the `README.md` file to include the test results, along with your initials. You can continue to update this later if needed.
+
+#### 5.3 Push the test results to the UTHP repo
+
+```bash
+git add ./UTHP-R1-XXXX
+git commit -m "Added UTHP-R1-XXXX test results - <your initials>"
+git push origin main
+```
+
+### 6. Production ready
 
 > WARNING: The following command will delete the uthp-tests dir and set the password to expire for the uthp user:
 ```bash
