@@ -23,6 +23,10 @@ reset:
 	rm -rf core/.pytest_cache; \
 	rm -rf plc/__pycache__; \
 	rm -rf plc/.pytest_cache; \
+	rm -rf remote/__pycache__; \
+	rm -rf remote/.pytest_cache; \
+	rm -rf can0-2/__pycache__; \
+	rm -rf can0-2/.pytest_cache; \
 	sudo rm -f /var/log/plc4trucksduck-errors.log; \
 	sudo rm -f /var/log/plc4trucksduck.log; \
 	sudo rm -f /var/log/j17084truckduck-errors.log; \
