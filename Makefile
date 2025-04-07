@@ -46,7 +46,7 @@ reset-remote:
 
 production-ready: reset
 	rm -rf /home/uthp/*
-	passwd --expire uthp
+	sudo passwd --expire uthp
 	sudo systemctl disable j17084truckduck
 	sudo systemctl disable plc4trucksduck
 	sudo systemctl disable truckdevil-tcp
