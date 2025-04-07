@@ -80,6 +80,8 @@ You should have the following targets:
 - `production-ready`: Cleans up the UTHP tests, ensures all services are disabled, and sets the password to expire for the uthp user
 - `create-log-dir`: Creates a log directory for the test results (this is done automatically when you run the tests)
 
+It's easiest to run two terminals. One you have ssh'd into with an active session, and another for running remote tests, updates, and other commands.
+
 #### 4.1 Core tests:
 
 > Note: The core tests have been verified on the Cascadia, but should be able to run on any network with CAN, and J1708.
@@ -196,7 +198,7 @@ And after we have achieved success, we can submit the image as production-ready,
 
 Each test result should be named respectively. Make sure to include all 4 test results (core, PLC, CAN0-2, and remote) in the same directory. The following walks you through the process:
 
-#### 5.1 Clone the UTHP repo
+#### 5.1 Clone the UTHP repo from *within* the uthp-tests directory
 
 ```bash
 git clone https://github.com/SystemsCyber/UTHP
@@ -220,7 +222,7 @@ Then copy the `core`, `plc`, and `can0-2` test results:
 scp -r uthp@192.168.7.2:/home/uthp/uthp-tests/logs ./UTHP-R1-XXXX
 ```
 
-Finally copy the remote test results from your local machine to the UTHP repo:
+Finally copy the `remote` test results from your local machine to the UTHP repo:
 ```bash
  cp ../../../../../logs/*-remote-results.txt ./UTHP-R1-XXXX
 ```
