@@ -50,6 +50,19 @@ CHANGED IMMEDIATELY AFTER RUNNING `make production-ready`.*
 python3 UpdateTHP.py
 ```
 
+> Note: Version 1.0.4 requires when prompted with `Enter any additional commands here...` for you to enter the following command:
+
+```bash
+systemctl enable rename-can-itf
+```
+> and again when prompted with `Enter any additional commands here...` for you to enter the following command:
+
+```bash
+systemctl enable can-netdev-led
+```
+
+> Then press enter to end the command loop.
+
 After this has run, please power cycle the UTHP (ensure the blue LED is completely off before powering it back on).
 
 ### 4. Run the tests

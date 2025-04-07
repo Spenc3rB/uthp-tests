@@ -46,8 +46,11 @@ try:
     else:
         print("Skipping overlays update.")
     
-    cmd = input("Enter any other commands here. Do not enter 'sudo' (e.g., reboot, systemctl enable rename-can-itf): ")
-    if cmd:
+    while True:
+        cmd = input("Enter any other commands here. Do not enter 'sudo' (e.g., reboot, systemctl enable rename-can-itf). Leave blank to exit: ")
+        if not cmd:
+            print("No additional commands provided. Exiting command loop.")
+            break
         print(f"Executing command: {cmd}")
         stdin, stdout, stderr = ssh.exec_command("echo {} | sudo -S {}".format(password, cmd))
         exit_status = stdout.channel.recv_exit_status()
@@ -55,8 +58,6 @@ try:
             print("Command executed successfully.")
         else:
             print(f"Error executing command: {stderr.read().decode()}")
-    else:
-        print("No additional commands provided.")
     
     
 except Exception as e:
