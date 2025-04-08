@@ -34,6 +34,8 @@ Now you are ready to take the tests for a spin! Remove the SD card from the UTHP
 
 Start by turning on the two battery chargers, then turn on both red safety switches on both the Cascadia and the Brake Board. 
 
+Then, make sure to charge the UTHP capacitors for safe-shutdown tests for at least 5 minutes, by plugging in the blue DSUB-15 connector. Grab a coffee or perform other unit tests on seperate UTHPs while you wait.
+
 ### 2. SSH into the "pre-production" UTHPs
 
 ```bash
