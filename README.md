@@ -36,6 +36,18 @@ Start by turning on the two battery chargers, then turn on both red safety switc
 
 Then, make sure to charge the UTHP capacitors for safe-shutdown tests for at least 5 minutes, by plugging in the blue DSUB-15 connector. Grab a coffee or perform other unit tests on seperate UTHPs while you wait.
 
+#### 1.1 Install the required software on your local machine
+
+```bash
+sudo apt install python3 python3-pip python3-venv git make
+```
+and then within the uthp-tests directory:
+```bash
+python3 -m venv uthp-test-env
+source uthp-test-env/bin/activate
+pip install -r requirements.txt
+```
+
 ### 2. SSH into the "pre-production" UTHPs
 
 ```bash
