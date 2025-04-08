@@ -184,6 +184,8 @@ or if make is not installed on your system, you can simply run:
 pytest ./remote/remote-testing.py
 ```
 
+Please ensure the UTHP is connected to 500K baud on can0 for the remote tests.
+
 > Note: To perform remote tests, you will need to clone the TruckDevil repo: `git clone https://github.com/Spenc3rB/TruckDevil` inside the uthp-tests directory.
 > Side note: j1708 encoding is tested by looking at the encoding (which is encoded as a j1708 message) and then sending a message serially to the UTHP. The actual software could not be tested:
 ```bash
