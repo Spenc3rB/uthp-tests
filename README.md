@@ -39,14 +39,15 @@ Then, make sure to charge the UTHP capacitors for safe-shutdown tests for at lea
 #### 1.1 Install the required software on your local machine
 
 ```bash
-sudo apt install python3 python3-pip python3-venv git make
+sudo apt install python3 python3-pip python3-venv git make 
 ```
-and then within the uthp-tests directory:
+and then to install the required python packages:
+
 ```bash
-python3 -m venv uthp-test-env
-source uthp-test-env/bin/activate
 pip install -r requirements.txt
 ```
+
+If you are getting warnings, do not use a venv. Instead try installing the packages globally with apt (e.g., sudo apt install python3-can).
 
 ### 2. SSH into the "pre-production" UTHPs
 
@@ -263,13 +264,15 @@ mkdir UTHP-R1-XXXX
 Then copy the `core`, `plc`, and `can0-2` test results:
 
 ```bash
-scp -r uthp@192.168.7.2:/home/uthp/uthp-tests/logs ./UTHP-R1-XXXX
+scp uthp@192.168.7.2:/home/uthp/uthp-tests/logs/* ./UTHP-R1-XXXX
 ```
 
 Finally copy the `remote` test results from your local machine to the UTHP repo:
 ```bash
  cp ../../../../../logs/*-remote-results.txt ./UTHP-R1-XXXX
 ```
+
+**Please only include one of each log, or the most recent.**
 
 Then open up a text editor and edit the `README.md` file to include the test results, along with your initials. You can continue to update this later if needed.
 
