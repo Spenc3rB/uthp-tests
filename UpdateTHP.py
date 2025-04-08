@@ -27,7 +27,7 @@ try:
         with SCPClient(ssh.get_transport()) as scp:
             scp.put(local_dts_path, "/home/uthp/")
         ssh.exec_command("mkdir -p {}".format(remote_dts_path.split('/')[0]))
-        print(f"Making directory {remote_dts_path.split('/')[0]}...")
+        print(f"Making directory {remote_dts_path.rsplit('/', 1)[0]}...")
         time.sleep(1)
         ssh.exec_command("echo {} | sudo -S mv /home/uthp/{} {}".format(password, local_dts_path.split('/')[-1], remote_dts_path))
         print(f"Moving {local_dts_path.split('/')[-1]} to {remote_dts_path}...")
