@@ -28,19 +28,18 @@ try:
             scp.put(local_dts_path, "/home/uthp/")
         ssh.exec_command("mkdir -p {}".format(remote_dts_path.split('/')[0]))
         print(f"Making directory {remote_dts_path.split('/')[0]}...")
-        time.sleep(0.25)
+        time.sleep(1)
         ssh.exec_command("echo {} | sudo -S mv /home/uthp/{} {}".format(password, local_dts_path.split('/')[-1], remote_dts_path))
         print(f"Moving {local_dts_path.split('/')[-1]} to {remote_dts_path}...")
-        time.sleep(0.25)
+        time.sleep(1)
         ssh.exec_command("echo {} | sudo -S chmod {} {}".format(password, permission, remote_dts_path))
         print(f"Setting permissions {permission} for {remote_dts_path}...")
-        time.sleep(0.25)
+        time.sleep(1)
     if update_overlays == 'yes':
         print("Updating overlays...")
         if ssh.exec_command("echo {} | sudo -S update-overlays".format(password))[1].read().decode():
-            time.sleep(0.25)
+            time.sleep(1)
             print("Overlays updated successfully.")
-            time.sleep(0.5)
         else:
             print("Error updating overlays.")
     else:
