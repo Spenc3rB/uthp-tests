@@ -174,10 +174,12 @@ Hardware:
 
 Let's run the CAN0-2 tests from *within* the UTHP:
 ```
-make can0-2-test
+sudo make can0-2-test
 ```
 
 #### 4.4 Remote tests:
+
+This will be performed 
 
 > Note: For these tests you will need to clone the following from within the uthp-tests directory:
 > 1. https://github.com/Spenc3rB/TruckDevil
@@ -258,7 +260,7 @@ git push origin main
 
 > WARNING: The following command will delete the uthp-tests dir and set the password to expire for the uthp user:
 ```bash
-make production-ready
+sudo make production-ready
 ```
 
 After running the tests, ensure nothing is left in the uthp user's home directory, the output of `systemctl status` looks something similar to this clean report:
@@ -333,10 +335,10 @@ You must change your password now and login again!
 If you need to reset the UTHP tests, you can do so by running the following command:
 
 ```bash
-make reset
+sudo make reset
 ```
 or if running remote tests:
 
 ```bash
-make reset-remote
+sudo make reset-remote
 ```

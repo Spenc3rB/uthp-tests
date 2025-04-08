@@ -52,6 +52,12 @@ production-ready: reset
 	sudo systemctl disable j17084truckduck
 	sudo systemctl disable truckdevil-tcp
 	sudo systemctl disable truckdevil-serial
+	sudo passwd --expire uthp
+	sudo systemctl disable j17084truckduck
+	sudo systemctl disable plc4trucksduck
+	sudo systemctl disable truckdevil-tcp
+	sudo systemctl disable truckdevil-serial
+	history -c
 
 create-log-dir:
 	mkdir -p $(LOG_DIR)
