@@ -157,29 +157,20 @@ Let's run the PLC tests from *within* the UTHP:
 sudo make plc-test
 ```
 > wait for `Environment setup should be complete... waiting for user to confirm hardware is ready.` and then power cycle the Brake Board. After that, you can hit any key to continue the tests.
-#### 4.3 CAN0-2 tests:
 
-> Note: The CAN0-2 tests have been verified on the Truck-In-A-Box, but should be able to run on any network with 12V CAN on the Deutch-9 Pin.
+#### 4.3 Remote tests:
 
 This tests the following:
+
 Software:
-- python3-can
+- TruckDevil Serial / TCP
+- GRIMM J1708 Serial
+- Serial Login
+- SSH Login
 
 Hardware:
 - Deutch-9 Pin can0 send and receive
-- Deutch-9 Pin can1 send and receive
-- Deutch-9 Pin can2 send and receive
-
-> Note: CAN4 is verified manually, by inspecting the bitmagic.
-
-Let's run the CAN0-2 tests from *within* the UTHP:
-```
-sudo make can0-2-test
-```
-
-#### 4.4 Remote tests:
-
-This will be performed 
+- DSUB-15 J1708 send and receive
 
 > Note: For these tests you will need to clone the following from within the uthp-tests directory:
 > 1. https://github.com/Spenc3rB/TruckDevil
@@ -207,6 +198,26 @@ pytest ./remote/remote-testing.py
   File "/usr/lib/python3.12/enum.py", line 1145, in __new__
     raise TypeError("%r has no members defined" % cls)
 TypeError: <flag 'BrakeSystemAirPressureLowWarningSwitchStatus'> has no members defined
+```
+
+#### 4.4 CAN0-2 tests:
+
+> Note: The CAN0-2 tests have been verified on the Truck-In-A-Box, but should be able to run on any network with 12V CAN on the Deutch-9 Pin.
+
+This tests the following:
+Software:
+- python3-can
+
+Hardware:
+- Deutch-9 Pin can0 send and receive
+- Deutch-9 Pin can1 send and receive
+- Deutch-9 Pin can2 send and receive
+
+> Note: CAN4 is verified manually, by inspecting the bitmagic.
+
+Let's run the CAN0-2 tests from *within* the UTHP:
+```
+sudo make can0-2-test
 ```
 
 And after we have achieved success, we can submit the image as production-ready, but first...
