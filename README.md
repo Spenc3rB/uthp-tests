@@ -67,6 +67,8 @@ systemctl enable can-netdev-led
 
 After this has run, please power cycle the UTHP (ensure the blue LED is completely off before powering it back on). If the UTHP doesn't have safe-shutdown yet (the blue LED turns off imediately), please run `sudo shutdown -h now` to power it off.
 
+> If the update was successful, you should see TruckHacking OS v1.0.4, and the only files within the `/home/uthp` directory should be the `uthp-tests` directory.
+
 ### 4. Run the tests
 
 ssh back into the UTHP. You should see the coresponding version number (see [./updates/updates.yaml](./updates/updates.yaml)) after you log in.
