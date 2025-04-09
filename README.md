@@ -124,7 +124,12 @@ You should have the following targets:
 
 It's easiest to run two terminals. One you have ssh'd into with an active session, and another for running remote tests, updates, and other commands. Each test references the hardware it should be connected to, so make sure to have the correct hardware connected to the UTHP.
 
-#### 4.1 Core tests:
+
+## 4.1 Hardware Tests
+
+Hardware tests can be run at any time before [Production ready](#6-production-ready) but should be performed before the software tests to catch hardware related issues early on. To perform the hardware tests, follow the instructions [here](https://github.com/SystemsCyber/UTHP/blob/main/Testing/Hardware/UTHPHardwareTesting_Physical.pdf). Afterwards, you are clear to mark the UTHP as passing the `hardware` test, in the QA log format explained below.
+
+#### 4.2 Core tests:
 
 > Note: The core tests have been verified on the Cascadia, but should be able to run on any network with CAN, and J1708.
 
@@ -161,7 +166,7 @@ Let's run the core tests from *within* the UTHP:
 sudo make core-test
 ```
 
-#### 4.2 PLC tests:
+#### 4.3 PLC tests:
 
 > Note: The PLC tests have been verified on the Brake Board, but should be able to run on any network with PLC.
 
@@ -183,7 +188,7 @@ sudo make plc-test
 ```
 > wait for `Environment setup should be complete... waiting for user to confirm hardware is ready.` and then power cycle the Brake Board. After that, you can hit any key to continue the tests.
 
-#### 4.3 Remote tests:
+#### 4.4 Remote tests:
 
 This tests the following:
 
@@ -227,7 +232,7 @@ Please ensure the UTHP is connected to 500K baud on can0 for the remote tests.
 TypeError: <flag 'BrakeSystemAirPressureLowWarningSwitchStatus'> has no members defined
 ```
 
-#### 4.4 CAN0-2 tests:
+#### 4.5 CAN0-2 tests:
 
 > Note: The CAN0-2 tests have been verified on the Truck-In-A-Box, but should be able to run on any network with 12V CAN on the Deutch-9 Pin.
 
@@ -248,10 +253,6 @@ sudo make can0-2-test
 ```
 
 And after we have achieved success, we can submit the image as production-ready, but first...
-
-## 4.5 Hardware Tests
-
-Hardware tests can be run at any time before [Production ready](#6-production-ready). To perform the hardware tests, follow the instructions [here](https://github.com/SystemsCyber/UTHP/blob/main/Testing/Hardware/UTHPHardwareTesting_Physical.pdf). Afterwards, you are clear to mark the UTHP as passing the `hardware` test, in the QA log format explained below.
 
 ### 5. Save the test results
 
