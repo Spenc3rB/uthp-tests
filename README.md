@@ -348,7 +348,15 @@ After running the tests, ensure nothing is left in the uthp user's home director
                ├─ 141 /usr/lib/systemd/systemd-userdbd
 ```
 
-...and pop open another terminal and ensure the passwd is expired for the uthp user. DO NOT SET A NEW PASSWORD. For example:
+Then run:
+
+```bash
+history -c
+```
+
+on the UTHP to clear the history.
+
+Finally, pop open another terminal and ensure the passwd is expired for the uthp user. DO NOT SET A NEW PASSWORD. For example:
 
 ```bash
 ssh uthp@192.168.7.2
@@ -358,6 +366,9 @@ WARNING: Your password has expired.
 You must change your password now and login again!
 ```
 
+Ctrl+C to exit the SSH session. You are now finished testing the UTHP!
+
+# Appendix
 ## Reset the UTHP tests
 
 > This stops systemd services that take up the CPU and memory, and resets the UTHP to a clean state. If performed remotely it will clean the cache.
