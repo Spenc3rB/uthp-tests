@@ -284,6 +284,8 @@ git commit -m "Added UTHP-R1-XXXX test results - <your initials>"
 git push origin main
 ```
 
+> Note: If you cannot push to the repo, create your own fork and create a pull request. Otherwise, keep track of the logs and send them to the UTHP team to add.
+
 ### 6. Production ready
 
 > WARNING: The following command will delete the uthp-tests dir and set the password to expire for the uthp user:
