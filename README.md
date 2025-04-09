@@ -262,8 +262,11 @@ Each test result should be named respectively. Make sure to include all 4 test r
 #### 5.1 Clone the UTHP repo from *within* the uthp-tests directory
 
 ```bash
-git clone https://github.com/SystemsCyber/UTHP
+git clone git@github.com:SystemsCyber/UTHP
 ```
+
+You will need to private key to push remotely, or one of the student laptops.
+
 #### 5.2 Copy the test results
 
 > Make sure these are the most recent (all passing) test results.
