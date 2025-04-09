@@ -94,6 +94,11 @@ After this has run, please power cycle the UTHP (ensure the blue LED is complete
 
 > If the update was successful, you should see TruckHacking OS v1.0.4, and the only files within the `/home/uthp` directory should be the `uthp-tests` directory. If not, run the update again, or move the files manually to their respective locations as shown in the updates.yaml file (csv format). You only have to reboot the UTHP if updating overlays.
 
+
+### 3.1 Hardware Tests
+
+Hardware tests can be run at any time before [Production ready](#6-production-ready) but should be performed before the software tests to catch hardware related issues early on. To perform the hardware tests, follow the instructions [here](https://github.com/SystemsCyber/UTHP/blob/main/Testing/Hardware/UTHPHardwareTesting_Physical.pdf). Afterwards, you are clear to mark the UTHP as passing the `hardware` test, in the QA log format explained later on.
+
 ### 4. Run the tests
 
 ssh back into the UTHP. You should see the coresponding version number (see [./updates/updates.yaml](./updates/updates.yaml)) after you log in.
@@ -123,11 +128,6 @@ You should have the following targets:
 - `create-log-dir`: Creates a log directory for the test results (this is done automatically when you run the tests)
 
 It's easiest to run two terminals. One you have ssh'd into with an active session, and another for running remote tests, updates, and other commands. Each test references the hardware it should be connected to, so make sure to have the correct hardware connected to the UTHP.
-
-
-## 4.1 Hardware Tests
-
-Hardware tests can be run at any time before [Production ready](#6-production-ready) but should be performed before the software tests to catch hardware related issues early on. To perform the hardware tests, follow the instructions [here](https://github.com/SystemsCyber/UTHP/blob/main/Testing/Hardware/UTHPHardwareTesting_Physical.pdf). Afterwards, you are clear to mark the UTHP as passing the `hardware` test, in the QA log format explained below.
 
 #### 4.2 Core tests:
 
