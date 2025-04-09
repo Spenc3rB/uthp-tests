@@ -34,7 +34,19 @@ Now you are ready to take the tests for a spin! Remove the SD card from the UTHP
 
 Start by turning on the two battery chargers, then turn on both red safety switches on both the Cascadia and the Brake Board. 
 
-Then, make sure to charge the UTHP capacitors for safe-shutdown tests for at least 5 minutes, by plugging in the blue DSUB-15 connector. Grab a coffee or perform other unit tests on seperate UTHPs while you wait.
+Then, make sure to charge the UTHP capacitors for safe-shutdown tests for at least 5 minutes, by plugging in the blue DSUB-15 connector (also referenced as the Brake Board in this document):
+
+![dsub-15](./media/DSUB-15.jpg)
+
+Grab a coffee or perform other unit tests on seperate UTHPs while you wait.
+
+This documentation refers to the Cascadia, and any reference to it's physical connection should look similarly to the following:
+
+![deutch 9 pin](./media/DEUTCH-9.jpg)
+
+Finally, when performing software tests for can0-2, make sure to connect the Deutch-9 pin to the Truck-In-A-Box, as shown below:
+
+![truck-in-a-box](./media/CAN0-2.jpg)
 
 #### 1.1 Install the required software on your local machine
 
@@ -110,7 +122,7 @@ You should have the following targets:
 - `production-ready`: Cleans up the UTHP tests, ensures all services are disabled, and sets the password to expire for the uthp user
 - `create-log-dir`: Creates a log directory for the test results (this is done automatically when you run the tests)
 
-It's easiest to run two terminals. One you have ssh'd into with an active session, and another for running remote tests, updates, and other commands.
+It's easiest to run two terminals. One you have ssh'd into with an active session, and another for running remote tests, updates, and other commands. Each test references the hardware it should be connected to, so make sure to have the correct hardware connected to the UTHP.
 
 #### 4.1 Core tests:
 
@@ -237,6 +249,10 @@ sudo make can0-2-test
 
 And after we have achieved success, we can submit the image as production-ready, but first...
 
+## 4.5 Hardware Tests
+
+Hardware tests can be run at any time before [Production ready](#6-production-ready). To perform the hardware tests, follow the instructions [here](https://github.com/SystemsCyber/UTHP/blob/main/Testing/Hardware/UTHPHardwareTesting_Physical.pdf). Afterwards, you are clear to mark the UTHP as passing the `hardware` test, in the QA log format explained below.
+
 ### 5. Save the test results
 
 > Note: Test results should be saved to the UTHP github repo: https://github.com/SystemsCyber/UTHP/tree/main/Testing/Software/assets/logs. The logs should be saved under a directory with the serial number of the UTHP. An example of the directory structure is shown in the [logs](https://github.com/SystemsCyber/UTHP/tree/main/Testing/Software/assets/logs) directory of the UTHP github repo.
@@ -284,7 +300,7 @@ git commit -m "Added UTHP-R1-XXXX test results - <your initials>"
 git push origin main
 ```
 
-> Note: If you cannot push to the repo, create your own fork and create a pull request. Otherwise, keep track of the logs and send them to the UTHP team to add.
+> Note: If you cannot push to the repo, please open an [issue](https://github.com/Spenc3rB/uthp-tests/issues).
 
 ### 6. Production ready
 
