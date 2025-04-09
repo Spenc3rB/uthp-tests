@@ -4,7 +4,7 @@ The UTHP team put together a set of pytests to test the Yocto build of the UTHP 
 
 ## Prerequisites
 
-Before you use this repository, you must have a basic understanding of Linux commands, and GitHub. Resource on how to use the Linux command line GitHub can be found [here](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) and [here](https://docs.github.com/en/get-started/quickstart).
+Before you use this repository, you must have a basic understanding of Linux commands, and GitHub. Resources on how to use the Linux command line GitHub can be found [here](https://ubuntu.com/tutorials/command-line-for-beginners#1-overview) and [here](https://docs.github.com/en/get-started/quickstart).
 
 ### 1. Connect the UTHP to the network and power it on with the SD card inserted. 
 
