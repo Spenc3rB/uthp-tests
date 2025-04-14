@@ -299,7 +299,7 @@ Then open up a text editor and edit the `README.md` file to include the test res
 #### 5.3 Push the test results to the UTHP repo
 
 ```bash
-git add ./UTHP-R1-XXXX
+git add .
 git commit -m "Added UTHP-R1-XXXX test results - <your initials>"
 git push origin main
 ```
