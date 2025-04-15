@@ -21,7 +21,7 @@ ssh root@192.168.7.2
 > This updates user, permissions, and packages.
 
 ```bash
-emmc-flasher
+sudo emmc-flasher
 ```
 
 Now you are ready to take the tests for a spin! Remove the SD card from the UTHP and power cycle the device.
@@ -29,6 +29,11 @@ Now you are ready to take the tests for a spin! Remove the SD card from the UTHP
 ## Running the tests
 
 > The tests are seperated by core tests (i.e., common functionality of the UTHP), PLC tests (i.e., 12V RAW signal needed seperately to test the PLC), and remote tests (i.e., laptop connected over USB-OTG Ethernet). In this sense the uthp-tests can be parallelized to run 3 tests on 3 different devices at the same time, improving the efficiency of the testing process.
+
+To parallize the tests for a more efficient production line, the following tests are compatible with each other and can be run on different devices at the same time:
+
+- Core tests, and Remote tests
+- PLC tests, and CAN0-2 tests
 
 ### 1. Set up the physcial testing space
 
@@ -59,7 +64,12 @@ and then to install the required python packages:
 pip install -r requirements.txt
 ```
 
-If you are getting warnings, do not use a venv. Instead try installing the packages globally with apt (e.g., sudo apt install python3-can).
+If you are getting warnings, do not use a venv. Instead try installing the packages globally with apt:
+
+```bash
+chmod +x install-deps.sh
+./install-deps.sh
+```
 
 ### 2. SSH into the "pre-production" UTHPs
 
