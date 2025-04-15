@@ -102,7 +102,7 @@ Then shutdown the uthp and disconnect the DSUB-15 and USB interfaces after typin
 
 > Then press enter to end the command loop.
 
-After this has run, please power cycle the UTHP (ensure the blue LED is completely off before powering it back on). If the UTHP doesn't have safe-shutdown yet (the blue LED turns off imediately), please run `sudo shutdown -h now` to power it off.
+To ensure the UTHP is power cycled, the blue LED should be completely off before powering it back on. If the UTHP doesn't have safe-shutdown yet (the blue LED turns off imediately).
 
 > If the update was successful, you should see TruckHacking OS v1.0.4, and the only files within the `/home/uthp` directory should be the `uthp-tests` directory. If not, run the update again, or move the files manually to their respective locations as shown in the updates.yaml file (csv format). You only have to reboot the UTHP if updating overlays.
 
