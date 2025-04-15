@@ -98,6 +98,8 @@ systemctl enable rename-can-itf
 systemctl enable can-netdev-led
 ```
 
+Then shutdown the uthp and disconnect the DSUB-15 and USB interfaces after typing in `shutdown now` in the command loop prompt (`Enter any additional commands here...`).
+
 > Then press enter to end the command loop.
 
 After this has run, please power cycle the UTHP (ensure the blue LED is completely off before powering it back on). If the UTHP doesn't have safe-shutdown yet (the blue LED turns off imediately), please run `sudo shutdown -h now` to power it off.
