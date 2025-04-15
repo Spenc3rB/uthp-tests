@@ -189,7 +189,8 @@ Software:
 - pretty-j1587
 
 Hardware:
-- DSUB-15 PLC send and receive (VBatt+12v and GND)
+- PLC send and receive (VBatt+12v and GND)
+- **NO DSUB-15 J1708**
 
 Let's run the PLC tests from *within* the UTHP:
 
