@@ -416,3 +416,16 @@ or if running remote tests:
 ```bash
 sudo make reset-remote
 ```
+
+## Stop custom services
+
+From within the UTHP:
+
+```bash
+sudo make stop-services
+```
+or disable them completely:
+
+```bash
+sudo make disable-services
+```
