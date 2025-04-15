@@ -72,7 +72,12 @@ def test_serial_read_write():
     time.sleep(10) # give time for serial port to initialize
     
     # read the serial port
-    data = ser.read(1024)
+    data = b""
+    while True:
+        line = ser.readline()
+        if not line:
+            break
+        data += line
     data = data.split(b'\r\n')
     for hex_string in data:
         if hex_string:
