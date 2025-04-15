@@ -43,18 +43,18 @@ reset-remote:
 
 stop-services:
 	@echo "Stopping all services on host: $(HOST)"; \
-	sudo systemctl stop plc4trucksduck
-	sudo systemctl stop j17084truckduck
-	sudo systemctl stop truckdevil-tcp
-	sudo systemctl stop truckdevil-serial
+	sudo systemctl stop plc4trucksduck; \
+	sudo systemctl stop j17084truckduck; \
+	sudo systemctl stop truckdevil-tcp; \
+	sudo systemctl stop truckdevil-serial; \
 	sudo systemctl stop j1708-grimm-encoder
 
 disable-services:
 	@echo "Disabling all services on host: $(HOST)"; \
-	sudo systemctl disable plc4trucksduck
-	sudo systemctl disable j17084truckduck
-	sudo systemctl disable truckdevil-tcp
-	sudo systemctl disable truckdevil-serial
+	sudo systemctl disable plc4trucksduck; \
+	sudo systemctl disable j17084truckduck; \
+	sudo systemctl disable truckdevil-tcp; \
+	sudo systemctl disable truckdevil-serial; \
 	sudo systemctl disable j1708-grimm-encoder
 
 production-ready: reset
