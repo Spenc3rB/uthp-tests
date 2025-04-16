@@ -66,7 +66,7 @@ def main():
 
     try:
         print("\nRunning remote tests...\n")
-        result = subprocess.run(["pytest", "./remote"], capture_output=True, text=True)
+        result = subprocess.run(["pytest", "./remote"], text=True)
         # print the result of the test
         print(result.stderr)
         print(result.stdout)
