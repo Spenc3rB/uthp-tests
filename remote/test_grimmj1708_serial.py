@@ -59,7 +59,7 @@ def check_j1708_checksum(hex_string):
     return (sum(data) + checksum) & 0xFF == 0
 
 
-def test_serial_read_write():
+def test_serial_read():
     """Ensure that the truckdevil serial read runs without errors."""
     ser = serial.Serial(
         port=os.getenv("GRIMMJ1708_PORT"),
@@ -69,24 +69,31 @@ def test_serial_read_write():
     ser.flushInput()
     ser.flushOutput()
 
-    time.sleep(10) # give time for serial port to initialize
-    
-    # read the serial port
-    data = b""
-    while True:
-        line = ser.readline()
-        if not line:
-            break
-        data += line
-    data = data.split(b'\r\n')
+    time.sleep(5)
+
+    start_time = time.time()
+    timeout_seconds = 15
+    data = []
+
+    while time.time() - start_time < timeout_seconds:
+        try:
+            line = ser.readline()
+            if not line:
+                continue
+            line = line.strip()
+            if line:
+                decoded = line.decode('utf-8')
+                print(f"Hex string: {decoded}")
+                data.append(decoded)
+        except Exception as e:
+            pytest.fail(f"Serial read error: {e}")
+
     for hex_string in data:
-        if hex_string:
-            hex_string = hex_string.decode('utf-8')
-            print(f"Hex string: {hex_string}")
-            if check_j1708_checksum(hex_string):
-                print(f"Checksum is valid for {hex_string}")
-            else:
-                print(f"Checksum is invalid for {hex_string}")
-                pytest.fail(f"Checksum is invalid for {hex_string}")
+        if check_j1708_checksum(hex_string):
+            print(f"Checksum is valid for {hex_string}")
+        else:
+            print(f"Checksum is invalid for {hex_string}")
+            pytest.fail(f"Checksum is invalid for {hex_string}")
 
     cleanup()
+    ser.close()
