@@ -317,7 +317,7 @@ git commit -m "Added UTHP-R1-XXXX test results - <your initials>"
 git push origin main
 ```
 
-> Note: If you cannot push to the repo, please open an [issue](https://github.com/Spenc3rB/uthp-tests/issues).
+> Note: If you cannot push to the repo, please open an [issue](https://github.com/Spenc3rB/uthp-tests/issues) or ensure you have received a private key to push to the repo (`ssh-add ~/.ssh/<private_key>`).
 
 ### 6. Production ready
 
