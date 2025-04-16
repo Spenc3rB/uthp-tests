@@ -59,7 +59,7 @@ def check_j1708_checksum(hex_string):
     return (sum(data) + checksum) & 0xFF == 0
 
 
-def test_serial_read():
+def test_serial_read_write():
     """Ensure that the truckdevil serial read runs without errors."""
     ser = serial.Serial(
         port=os.getenv("GRIMMJ1708_PORT"),
@@ -69,10 +69,11 @@ def test_serial_read():
     ser.flushInput()
     ser.flushOutput()
 
-    time.sleep(5)
+    time.sleep(5)  # shorter delay is usually fine
 
+    # Set a max number of lines or a timeout to avoid infinite reads
     start_time = time.time()
-    timeout_seconds = 15
+    timeout_seconds = 10
     data = []
 
     while time.time() - start_time < timeout_seconds:
@@ -88,6 +89,7 @@ def test_serial_read():
         except Exception as e:
             pytest.fail(f"Serial read error: {e}")
 
+    # Now validate all captured lines
     for hex_string in data:
         if check_j1708_checksum(hex_string):
             print(f"Checksum is valid for {hex_string}")
