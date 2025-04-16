@@ -279,7 +279,7 @@ Each test result should be **named respectively** to match the serial number and
 git clone git@github.com:SystemsCyber/UTHP
 ```
 
-You will need to private key to push remotely, or one of the student laptops.
+You will need to private key to pull or push remotely, or one of the student laptops.
 
 #### 5.2 Copy the test results
 
@@ -308,6 +308,18 @@ Finally copy the `remote` test results from your local machine to the UTHP repo:
 **Please only include one of each log, or the most recent.**
 
 Then open up a text editor and edit the `README.md` file to include the test results, along with your initials. You can continue to update this later if needed.
+
+#### 5.3 Check the status of the repo
+
+```bash
+git status
+```
+and pull the latest changes from the repo:
+
+```bash
+git pull origin main
+```
+> You should see your changes in the `git status` output. If you see any merge conflicts, please resolve them before continuing.
 
 #### 5.3 Push the test results to the UTHP repo
 
