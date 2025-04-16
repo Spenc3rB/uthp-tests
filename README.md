@@ -271,7 +271,7 @@ And after we have achieved success, we can submit the image as production-ready,
 
 > Note: Test results should be saved to the UTHP github repo: https://github.com/SystemsCyber/UTHP/tree/main/Testing/Software/assets/logs. The logs should be saved under a directory with the serial number of the UTHP. An example of the directory structure is shown in the [logs](https://github.com/SystemsCyber/UTHP/tree/main/Testing/Software/assets/logs) directory of the UTHP github repo.
 
-Each test result should be named respectively. Make sure to include all 4 test results (core, PLC, CAN0-2, and remote) in the same directory. The following walks you through the process:
+Each test result should be **named respectively** to match the serial number and time of the test. Make sure to include all 4 test results (core, PLC, CAN0-2, and remote) in the same directory. The following walks you through the process:
 
 #### 5.1 Clone the UTHP repo from *within* the uthp-tests directory
 
@@ -324,61 +324,6 @@ git push origin main
 > WARNING: The following command will delete the uthp-tests dir and set the password to expire for the uthp user:
 ```bash
 sudo make production-ready
-```
-
-After running the tests, ensure nothing is left in the uthp user's home directory, the output of `systemctl status` looks something similar to this clean report:
-
-```bash
-● UTHP-R1-0032
-    State: running
-    Units: 231 loaded (incl. loaded aliases)
-     Jobs: 0 queued
-   Failed: 0 units
-    Since: Wed 1969-12-31 19:00:03 EST; 55 years 3 months ago
-  systemd: 255.17^
-   CGroup: /
-           ├─init.scope
-           │ └─1 /sbin/init
-           └─system.slice
-             ├─busybox-klogd.service
-             │ └─193 /usr/sbin/klogd -n
-             ├─busybox-syslog.service
-             │ └─194 /usr/sbin/syslogd -n
-             ├─dbus.service
-             │ └─195 /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopid>
-             ├─safe-shutdown.service
-             │ ├─ 198 /bin/bash -e /opt/uthp/scripts/safe-shutdown.sh
-             │ └─5193 sleep 2
-             ├─system-getty.slice
-             │ └─getty@tty1.service
-             │   └─196 /sbin/agetty -o "-p -- \\u" --noclear - linux
-             ├─system-serial\x2dgetty.slice
-             │ ├─serial-getty@ttyGS0.service
-             │ │ └─278 /sbin/agetty -8 -L ttyGS0 115200 linux
-             │ └─serial-getty@ttyS0.service
-             │   └─199 /sbin/agetty -8 -L ttyS0 115200 linux
-             ├─system-sshd.slice
-             │ └─sshd@13-192.168.7.2:22-192.168.7.1:6349.service
-             │   ├─4553 "sshd: uthp [priv]"
-             │   ├─4561 "sshd: uthp@pts/0"
-             │   ├─4562 -bash
-             │   ├─5194 systemctl status
-             │   └─5195 less
-             ├─systemd-journald.service
-             │ └─105 /usr/lib/systemd/systemd-journald
-             ├─systemd-logind.service
-             │ └─206 /usr/lib/systemd/systemd-logind
-             ├─systemd-networkd.service
-             │ └─140 /usr/lib/systemd/systemd-networkd
-             ├─systemd-resolved.service
-             │ └─172 /usr/lib/systemd/systemd-resolved
-             ├─systemd-timesyncd.service
-             │ └─173 /usr/lib/systemd/systemd-timesyncd
-             ├─systemd-udevd.service
-             │ └─udev
-             │   └─138 /usr/lib/systemd/systemd-udevd
-             └─systemd-userdbd.service
-               ├─ 141 /usr/lib/systemd/systemd-userdbd
 ```
 
 Then run:
