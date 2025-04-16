@@ -321,7 +321,7 @@ git pull origin main
 ```
 > You should see your changes in the `git status` output. If you see any merge conflicts, please resolve them before continuing.
 
-#### 5.3 Push the test results to the UTHP repo
+#### 5.3.1 Push the test results to the UTHP repo
 
 ```bash
 git add .
