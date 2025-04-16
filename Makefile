@@ -16,7 +16,7 @@ remote-test: create-log-dir
 can0-2-test: create-log-dir
 	@script -q -c "bash -c './can0-2-testing && pytest ./can0-2/'" $(LOG_FILE)-can0-2-results.txt
 
-reset:
+reset: stop-services disable-services
 	@echo "Running reset on host: $(HOST)"; \
 	rm -rf logs/; \
 	rm -rf core/__pycache__; \
@@ -32,7 +32,6 @@ reset:
 	sudo rm -f /var/log/j17084truckduck-errors.log; \
 	sudo rm -f /var/log/j17084truckduck.log; \
 	if ls /opt/uthp/programs/cmap/*.log 1> /dev/null 2>&1; then sudo rm /opt/uthp/programs/cmap/*.log; fi;
-	stop-services; \
 
 
 reset-remote:
@@ -43,25 +42,22 @@ reset-remote:
 
 stop-services:
 	@echo "Stopping all services on host: $(HOST)"; \
-	sudo systemctl stop plc4trucksduck
-	sudo systemctl stop j17084truckduck
-	sudo systemctl stop truckdevil-tcp
-	sudo systemctl stop truckdevil-serial
+	sudo systemctl stop plc4trucksduck; \
+	sudo systemctl stop j17084truckduck; \
+	sudo systemctl stop truckdevil-tcp; \
+	sudo systemctl stop truckdevil-serial; \
 	sudo systemctl stop j1708-grimm-encoder
 
 disable-services:
 	@echo "Disabling all services on host: $(HOST)"; \
-	sudo systemctl disable plc4trucksduck
-	sudo systemctl disable j17084truckduck
-	sudo systemctl disable truckdevil-tcp
-	sudo systemctl disable truckdevil-serial
+	sudo systemctl disable plc4trucksduck; \
+	sudo systemctl disable j17084truckduck; \
+	sudo systemctl disable truckdevil-tcp; \
+	sudo systemctl disable truckdevil-serial; \
 	sudo systemctl disable j1708-grimm-encoder
 
-production-ready: reset
+production-ready: reset stop-services disable-services
 	rm -rf /home/uthp/*
-	sudo passwd --expire uthp
-	@echo "Ensuring all services are disabled"; \
-	disable-services; \
 	sudo passwd --expire uthp
 
 create-log-dir:
