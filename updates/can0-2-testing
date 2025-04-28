@@ -16,14 +16,17 @@ else
     echo "Setting up the environment for testing the can0-2 uthp tests..."
     echo "====================================================="
     echo "Unique identifiers for $(hostname):"
-	sudo lsblk -o NAME,UUID | grep "mmcblk1" -A 2
+    sudo lsblk -o NAME,UUID | grep "mmcblk1" -A 2
+
+    read -p "Enter the desired CAN bus baud rate (e.g., 500000): " BAUD_RATE
+
     echo "Setting up the CAN interface..."
     sudo ip link set can0 down
     sudo ip link set can1 down
     sudo ip link set can2 down
-    sudo ip link set can0 type can bitrate 500000
-    sudo ip link set can1 type can bitrate 500000
-    sudo ip link set can2 type can bitrate 500000
+    sudo ip link set can0 type can bitrate "$BAUD_RATE"
+    sudo ip link set can1 type can bitrate "$BAUD_RATE"
+    sudo ip link set can2 type can bitrate "$BAUD_RATE"
     sudo ip link set up can0
     sudo ip link set up can1
     sudo ip link set up can2
